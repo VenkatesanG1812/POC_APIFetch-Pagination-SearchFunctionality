@@ -5,15 +5,22 @@ export const Card = () => {
   const [cartdata, setcart] = useState([]);
   const [filterArray, setfilterArray] = useState([]);
   const [currentPage, setPage] = useState(1);
+  const [name, setsearch] = useState("");
   const [isLoading, setLoading] = useState(true);
   const [filterdata, setfilter] = useState("all");
   const CharacterULR = `https://rickandmortyapi.com/api/character?page=${currentPage}`;
   const applyFilters = () => {
     if (filterdata === "all") {
-      console.log("all filter");
-      setfilterArray(cartdata); // No filter, show all data
+      if (name == " ") {
+        setfilterArray(cartdata); // No filter, show all data
+      } else {
+        const filtered = cartdata.filter((item) =>
+          item.name.toLowerCase().includes(name.toLowerCase())
+        );
+        setfilterArray(filtered);
+      }
     } else {
-      console.log(filterdata);
+      // console.log(filterdata);
       const filtered = cartdata.filter((item) => item.status === filterdata);
       setfilterArray(filtered);
     }
@@ -22,23 +29,36 @@ export const Card = () => {
     getcarddetails();
   }, [currentPage]);
   useEffect(() => {
-    applyFilters();
-  }, [filterdata, cartdata]);
+    const timer = setTimeout(() => {
+      applyFilters();
+      console.log("mounted");
+    }, 500);
+    return () => {
+      clearInterval(timer);
+      console.log("unmounted");
+    };
+  }, [filterdata, cartdata, name]);
 
   const getcarddetails = async () => {
     setLoading(true);
     const cartdetails = await axios.get(CharacterULR);
     if (cartdetails.status == 200) {
-      console.log(cartdetails);
+      // console.log(cartdetails);
       setcart(cartdetails.data.results);
       setfilterArray(cartdetails.data.results);
       setLoading(false);
     }
   };
-  console.log(cartdata);
+  // console.log(cartdata);
   if (isLoading) {
     return <div>Loading...</div>;
   }
+  // function handlesearch(event) {
+  //   setTimeout(() => {
+  //     setsearch(event.target.value);
+  //   }, 5000);
+  //   console.log(name);
+  // }
 
   return (
     <>
@@ -53,6 +73,12 @@ export const Card = () => {
           <option value="Alive">Alive</option>
           <option value="Dead">Dead</option>
         </select>
+        <div>
+          <input
+            value={name}
+            onChange={(event) => setsearch(event.target.value)}
+          />
+        </div>
       </div>
 
       <div className="CartLayout">
