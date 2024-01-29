@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { CharacterULR } from "../constant";
+// import { CharacterULR } from "../constant";
 import axios from "axios";
 export const Card = () => {
   const [initialcard, setcart] = useState([]);
   const [currentPage, setPage] = useState(1);
   const [isLoading, setLoading] = useState(true);
-  const CharacterULR = `https://rickandmortyapi.com/api/character?page={currentPage}`;
+  const CharacterULR = `https://rickandmortyapi.com/api/character?page=${currentPage}`;
   useEffect(() => {
     getcarddetails();
   }, []);
