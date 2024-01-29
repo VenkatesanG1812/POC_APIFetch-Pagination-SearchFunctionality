@@ -20,9 +20,15 @@ export const Card = () => {
         setfilterArray(filtered);
       }
     } else {
-      // console.log(filterdata);
       const filtered = cartdata.filter((item) => item.status === filterdata);
-      setfilterArray(filtered);
+      if (name != " ") {
+        const namefil = filtered.filter((item) =>
+          item.name.toLowerCase().includes(name.toLowerCase())
+        );
+        setfilterArray(namefil);
+      } else {
+        setfilterArray(filtered);
+      }
     }
   };
   useEffect(() => {
