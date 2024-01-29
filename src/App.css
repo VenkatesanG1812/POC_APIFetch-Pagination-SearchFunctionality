@@ -42,6 +42,9 @@
   align-self: center;
   border: solid 1px;
   margin:5px;
+  width: 250px;
+  height: 400px;
+  background-color: #86bfce21
 
 }
 .CartLayout{
@@ -50,4 +53,23 @@
   display: flex;
   flex-wrap: wrap;
   
+}
+.pagination{
+  size: 100px;
+  font-size: large;
+  background-color: #93c4d1;
+  display: flex;
+  justify-content: space-around;
+}
+
+#butt{
+background-color: antiquewhite;
+font-size: larger;
+}
+.filter
+{
+  display: flex;
+  background-color: #93c4d1;
+  justify-content: flex-start;
+  align-items: baseline;
 }
