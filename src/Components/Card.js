@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { CharacterULR } from "../constant";
 import axios from "axios";
 export const Card = () => {
   const [cartdata, setcart] = useState([]);
@@ -12,8 +11,9 @@ export const Card = () => {
   const applyFilters = () => {
     if (filterdata === "all") {
       if (name == " ") {
-        setfilterArray(cartdata); // No filter, show all data
+        setfilterArray(cartdata); // No filter for status and name, show all data
       } else {
+        //When name type having search value
         const filtered = cartdata.filter((item) =>
           item.name.toLowerCase().includes(name.toLowerCase())
         );
@@ -35,13 +35,15 @@ export const Card = () => {
     getcarddetails();
   }, [currentPage]);
   useEffect(() => {
+    //Debounce-Waiting 5ms for user typing the search field
     const timer = setTimeout(() => {
       applyFilters();
-      console.log("mounted");
+      // console.log("mounted");
     }, 500);
     return () => {
+      //Unmount phase-where timer will cleared.
       clearInterval(timer);
-      console.log("unmounted");
+      // console.log("unmounted");
     };
   }, [filterdata, cartdata, name]);
 
@@ -49,28 +51,23 @@ export const Card = () => {
     setLoading(true);
     const cartdetails = await axios.get(CharacterULR);
     if (cartdetails.status == 200) {
-      // console.log(cartdetails);
       setcart(cartdetails.data.results);
       setfilterArray(cartdetails.data.results);
       setLoading(false);
     }
   };
-  // console.log(cartdata);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  // function handlesearch(event) {
-  //   setTimeout(() => {
-  //     setsearch(event.target.value);
-  //   }, 5000);
-  //   console.log(name);
-  // }
 
   return (
     <>
-      <h2>Rickandmortyapi Characters</h2>
+      <header>
+        <h4 className="header">Rickandmortyapi Characters</h4>
+      </header>
       <div className="filter">
-        <h5>Filter by Status</h5>
+        <h5>Filter by Status and Name</h5>
         <select
           value={filterdata}
           onChange={(event) => setfilter(event.target.value)}
@@ -81,7 +78,9 @@ export const Card = () => {
         </select>
         <div>
           <input
+            type="text"
             value={name}
+            placeholder="search by name"
             onChange={(event) => setsearch(event.target.value)}
           />
         </div>
@@ -96,26 +95,28 @@ export const Card = () => {
           </div>
         ))}
       </div>
-      <div class="pagination">
-        <button
-          id="butt"
-          onClick={() => {
-            if (currentPage != 1) setPage(currentPage - 1);
-          }}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <button
-          id="butt"
-          onClick={() => {
-            if (currentPage != 42) setPage(currentPage + 1);
-          }}
-          disabled={currentPage === 42}
-        >
-          Next
-        </button>
-      </div>
+      <footer>
+        <div class="pagination">
+          <button
+            id="butt"
+            onClick={() => {
+              if (currentPage != 1) setPage(currentPage - 1);
+            }}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <button
+            id="butt"
+            onClick={() => {
+              if (currentPage != 42) setPage(currentPage + 1);
+            }}
+            disabled={currentPage === 42}
+          >
+            Next
+          </button>
+        </div>
+      </footer>
     </>
   );
 };

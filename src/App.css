@@ -70,6 +70,12 @@ font-size: larger;
 {
   display: flex;
   background-color: #93c4d1;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   align-items: baseline;
+}
+.header
+{
+  background-color: #abe9ff40;
+  height: 50px;
+  margin: 5px;
 }
