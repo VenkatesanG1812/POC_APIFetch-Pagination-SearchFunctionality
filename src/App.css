@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+.Card{
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  border: solid 1px;
+  margin:5px;
+
+}
+.CartLayout{
+ 
+
+  display: flex;
+  flex-wrap: wrap;
+  
+}
