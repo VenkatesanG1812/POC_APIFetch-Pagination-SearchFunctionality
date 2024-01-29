@@ -1,1 +1,1 @@
-export const CharacterULR = "https://rickandmortyapi.com/api/character?page=1";
+export const CharacterULR = `https://rickandmortyapi.com/api/character?page=1`;
