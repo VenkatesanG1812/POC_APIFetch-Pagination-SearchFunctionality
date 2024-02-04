@@ -43,7 +43,7 @@ export const Card = () => {
     return () => {
       //Unmount phase-where timer will cleared.
       clearInterval(timer);
-      // console.log("unmounted");
+      // console.log("unmounteds");
     };
   }, [filterdata, cartdata, name]);
 
